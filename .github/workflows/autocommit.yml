@@ -49,6 +49,4 @@ jobs:
       - name: Push ke GitHub
         uses: ad-m/github-push-action@master
         with:
-          force_with_lease: true
-          directory: "."
           github_token: ${{ secrets.GITHUB_TOKEN }}
