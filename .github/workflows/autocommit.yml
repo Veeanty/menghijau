@@ -1,29 +1,31 @@
 name: Auto commit
 
 on:
-
   push:
     branches:
       - master
-      
+
   schedule:
-  - cron: "5 5 * * *" # See https://crontab.guru/
+    # Commit setiap 7 jam
+    - cron: "0 */7 * * *"
+    # Commit 5 kali setiap hari Senin sampai Jumat
+    - cron: "0 8-16/2 * * 1-5" # Ini akan berjalan pada pukul 08:00, 10:00, 12:00, 14:00, dan 16:00
 
 jobs:
   auto_commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3      
+      - uses: actions/checkout@v3
         with:
-         persist-credentials: false
-         fetch-depth: 0
+          persist-credentials: false
+          fetch-depth: 0
 
-      - name: Modify last update
+      - name: Modifikasi pembaruan terakhir
         run: |
           d=`date '+%Y-%m-%dT%H:%M:%SZ'`
           echo $d > LAST_UPDATED
           
-      - name: Commit changes
+      - name: Commit perubahan
         run: |
           git config --local user.email "galihcatur960@students.amikom.ac.id"
           git config --local user.name "Veeanty"
@@ -44,7 +46,7 @@ jobs:
           
           git commit -m "${arr[$rand]}"
           
-      - name: GitHub Push
+      - name: Push ke GitHub
         uses: ad-m/github-push-action@master
         with:
           force-with-lease: true
