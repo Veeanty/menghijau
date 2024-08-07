@@ -20,6 +20,10 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
+      - name: Tarik perubahan terbaru dari remote
+        run: |
+          git pull origin master
+
       - name: Modifikasi pembaruan terakhir
         run: |
           d=`date '+%Y-%m-%dT%H:%M:%SZ'`
@@ -50,3 +54,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_url: https://github.com
+          push_to_submodules: on-demand
+          directory: .
+          branch: master
